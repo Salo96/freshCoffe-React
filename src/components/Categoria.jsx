@@ -26,3 +26,4 @@ export const Categoria = ({ categoria }) => {
 }
 
 // handleClickCategoria(id) llamar una funcion por eso se usa ()=>
+//hola
