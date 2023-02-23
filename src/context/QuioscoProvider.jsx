@@ -7,6 +7,8 @@ export const QuioscoProvider = ({ children }) => {
 
     const [categorias, setCategorias] = useState(categoriasDB);
     const [categoriaActual, setCategoriaActual] = useState(categorias[0]);
+    const [modal, setModal] = useState(false);
+    const [producto, setProducto] = useState({})
 
     const handleClickCategoria = id =>{
         ///console.log(id);
@@ -14,11 +16,21 @@ export const QuioscoProvider = ({ children }) => {
         const categoria = categorias.filter(categoria => categoria.id === id)[0];//<- accede directamente el valor del arreglo
         //console.log(categoria);
         //setCategoriaActual tendra el valor de categoria
-        setCategoriaActual(categoria)
+        setCategoriaActual(categoria);
     }
 
     //console.log(categorias[0]);
     // const hola = "hola mundo";
+
+    //abre y cierre de modal, con negacion si es true muestra false y arreves
+    const handleClickModel = () =>{
+        setModal(!modal);
+    }
+
+    //agregar producto al modal
+    const handleSetProducto = producto =>{
+        setProducto(producto);
+    }
 
   return (
     <QuioscoContext.Provider
@@ -26,7 +38,11 @@ export const QuioscoProvider = ({ children }) => {
             //aqio mando la categorias al sidebar(cuerpo)
             categorias,
             categoriaActual,
-            handleClickCategoria
+            handleClickCategoria,
+            modal,
+            handleClickModel,
+            producto,
+            handleSetProducto
         }}
     >
         {children}

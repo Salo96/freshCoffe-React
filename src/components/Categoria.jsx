@@ -4,7 +4,7 @@ export const Categoria = ({ categoria }) => {
 
   const {handleClickCategoria, categoriaActual} =  useQuiosco();
   const { icono, id, nombre} = categoria
-   console.log(id);
+  //console.log(id);
 
 
   return (
@@ -26,4 +26,4 @@ export const Categoria = ({ categoria }) => {
 }
 
 // handleClickCategoria(id) llamar una funcion por eso se usa ()=>
-//hola
+
