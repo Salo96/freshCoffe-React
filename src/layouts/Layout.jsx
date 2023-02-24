@@ -1,5 +1,7 @@
 import { Outlet } from "react-router-dom";
 import Modal from "react-modal";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { Resumen } from "../components/Resumen";
 import { Sidebar } from "../components/Sidebar";
 import { useQuiosco } from "../hooks/useQuiosco";
@@ -39,9 +41,28 @@ export const Layout = () => {
       </div>
 
    
-      <Modal isOpen={modal} style={customStyles} >
+      <Modal 
+        isOpen={modal} 
+        style={customStyles} 
+        //salir del modal en cualquier lado
+        onRequestClose={ handleClickModel }
+        overlayClassName="modal-fondo"
+      >
         <ModalProducto/>
       </Modal>
+
+      <ToastContainer 
+        position="bottom-left"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
 
     </>
   )
