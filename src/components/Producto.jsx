@@ -16,8 +16,8 @@ export const Producto = ({ producto }) => {
 
 
       <div className="p-5">
-        <h3 className="text-xl font-bold">{nombre}</h3>
-        <p className="mt-2 font-black text-xl text-amber-500">
+        <h3 className="text-3xl font-bold">{nombre}</h3>
+        <p className="mt-2 font-black text-3xl text-amber-500">
           {formatearDinero(precio)}
         </p>
 
