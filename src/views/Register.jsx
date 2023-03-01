@@ -1,5 +1,6 @@
 import { createRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { Alerta } from "../components/Alerta";
 import { clienteAxios } from "../config/axios";
 
 export const Register = () => {
@@ -11,12 +12,16 @@ export const Register = () => {
   const passwordRef = createRef();
   const passwordConfirmationRef = createRef();
 
+  const [errores, setErrores] = useState([]);
+
+  // funcion cuando le click en registrar
   const handleSubmit = async e => {
     e.preventDefault();
 
     const datos = {
-      //asi es como se recorre
+      //asi es como se recorre la informacion
       //console.log(nameRef.current.value);
+      //capturo la inf
       name: nameRef.current.value,
       email: emailRef.current.value,
       password: passwordRef.current.value,
@@ -25,10 +30,17 @@ export const Register = () => {
 
     try {
       //console.log(datos);
+      //peticion post en axios
       const resp = await clienteAxios.post('/api/registro', datos)
-      console.log(resp);
+    /console.log(resp);
     } catch (error) {
-      console.log(error);
+      //aqui veo el error
+      //console.log(Object.values(error.response.data.errors));
+      // capturo el error
+      const noValidate = Object.values(error.response.data.errors || '');
+      // agrego el error en useState
+      setErrores(noValidate)
+      
     }
 
   }
@@ -41,7 +53,11 @@ export const Register = () => {
       <div className="bg-white shadow-md rounded-md mt-10 px-5 py-10">
         <form
           onSubmit={ handleSubmit }
+          noValidate
         >
+
+          { errores ? errores.map ((error, i) => <Alerta key={ i }>{ error }</Alerta>) : null }
+
           <div className="mb-4">
             <label className="text-slate-800" htmlFor="name">Nombre</label>
             <input 
