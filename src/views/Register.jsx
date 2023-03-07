@@ -1,7 +1,7 @@
 import { createRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Alerta } from "../components/Alerta";
-import { clienteAxios } from "../config/axios";
+import { useAuth } from "../hooks/useAuth";
 
 export const Register = () => {
 
@@ -13,6 +13,11 @@ export const Register = () => {
   const passwordConfirmationRef = createRef();
 
   const [errores, setErrores] = useState([]);
+  const { registro } = useAuth({
+    //no autenticado
+    middleware: 'guest',
+    url: '/'
+  })
 
   // funcion cuando le click en registrar
   const handleSubmit = async e => {
@@ -28,20 +33,27 @@ export const Register = () => {
       password_confirmation: passwordConfirmationRef.current.value,
     }
 
-    try {
-      //console.log(datos);
-      //peticion post en axios
-      const resp = await clienteAxios.post('/api/registro', datos)
-    /console.log(resp);
-    } catch (error) {
-      //aqui veo el error
-      //console.log(Object.values(error.response.data.errors));
-      // capturo el error
-      const noValidate = Object.values(error.response.data.errors || '');
-      // agrego el error en useState
-      setErrores(noValidate)
+    registro(datos, setErrores)
+
+    // try {
+    //   //console.log(datos);
+    //   //peticion post en axios
+    //   // const resp = await clienteAxios.post('/api/registro', datos)
+    //   // console.log(resp);
+    //   const { data } = await clienteAxios.post('/api/registro', datos)
+    //   //console.log(data.token);
+    //   setErrores([]);
+    // } catch (error) {
+    //   //aqui veo el error
+    //   //console.log(Object.values(error.response.data.errors));
+    //   // capturo el error
+    //   //const noValidate = Object.values(error.response.data.errors);
+    //   // agrego el error en useState
+    //   //setErrores(noValidate)
+
+    //   setErrores(Object.values(error.response.data.errors))
       
-    }
+    // }
 
   }
 

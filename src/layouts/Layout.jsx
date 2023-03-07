@@ -6,6 +6,7 @@ import { Resumen } from "../components/Resumen";
 import { Sidebar } from "../components/Sidebar";
 import { useQuiosco } from "../hooks/useQuiosco";
 import { ModalProducto } from "../components/ModalProducto";
+import { useAuth } from "../hooks/useAuth";
 
 const customStyles = {
   content: {
@@ -22,9 +23,12 @@ Modal.setAppElement('#root');
 
 export const Layout = () => {
 
+  const { user, error } = useAuth({middleware: 'auth'})
   const { modal, handleClickModel } = useQuiosco();
 
-  //console.log(modal);
+  console.log(user);
+  console.log(error);
+
 
   return (
 
