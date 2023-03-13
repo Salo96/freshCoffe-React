@@ -26,8 +26,8 @@ export const Layout = () => {
   const { user, error } = useAuth({middleware: 'auth'})
   const { modal, handleClickModel } = useQuiosco();
 
-  console.log(user);
-  console.log(error);
+  // console.log(user);
+  // console.log(error);
 
 
   return (

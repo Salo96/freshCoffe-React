@@ -99,10 +99,52 @@ export const QuioscoProvider = ({ children }) => {
         toast.success("elimando correctamente")
     }
 
+    const handleSubmitNuevaOrden = async( logout ) => {
+            //el token lo tengo el localstorage, lo capturo
+            const token = localStorage.getItem('AUTH_TOKEN');
+        try {
+            const { data } = await clienteAxios.post('/api/pedido',
+            {
+                total,
+                //arreglo nuevo con MAP solo el id y cantidad quiero guardar en bd
+                productos: pedido.map( producto => {
+                    return{
+                        id: producto.id,
+                        cantidad: producto.cantidad
+                    }
+                }),
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+
+            //mensaje de succes que biene del back
+            toast.success(data.message);
+
+            //despues de un segundo pedido va estar vacio
+            setTimeout(() => {
+                setPedido([]);
+            }, 1000);
+
+            //cerrar la session del usuario
+            setTimeout(() => {
+                localStorage.removeItem('AUTH_TOKEN');
+                logout();
+            }, 3000);
+            
+            
+            //console.log(pedido);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
   return (
     <QuioscoContext.Provider
         value={{
-            //aqui mando varieable y funciones en cualquier lugar de la app
+            //aqui mando variable y funciones en cualquier lugar de la app
             categorias,
             categoriaActual,
             handleClickCategoria,
@@ -114,7 +156,8 @@ export const QuioscoProvider = ({ children }) => {
             handleAgregarPedido,
             handleEditarCantidad,
             handleEliminarProductoPedido,
-            total
+            total,
+            handleSubmitNuevaOrden
         }}
     >
         {children}
