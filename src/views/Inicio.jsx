@@ -8,8 +8,13 @@ export const Inicio = () => {
 
   const { categoriaActual } = useQuiosco();
 
+  const token = localStorage.getItem('AUTH_TOKEN');
   //consulta SWR
-  const fetcher = () => clienteAxios('/api/productos').then(data => data.data)
+  const fetcher = () => clienteAxios('/api/productos', {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }).then(data => data.data)
 
   const { data, error, isLoading } = useSWR('/api/productos', fetcher, {
     refreshInterval: 1000
@@ -39,7 +44,8 @@ export const Inicio = () => {
         { productos.map( producto =>(
           <Producto 
             key      = { producto.id }
-            producto = { producto }   
+            producto = { producto }  
+            botonAgregar = { true } 
           />
         ))}
       </div>

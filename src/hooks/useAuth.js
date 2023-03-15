@@ -84,6 +84,16 @@ export const useAuth = ({ middleware, url }) => {
             navigate(url);
         }
 
+        //usuario administrador
+        if(middleware === "guest" && user && user.admin){
+            navigate('/admin');
+        }
+
+        //usuario no administrador
+        if(middleware === "admin" && user && !user.admin){
+            navigate('/');
+        }
+
         //usuario no autenticado
         if(middleware ==="auth" && error){
             navigate('/auth/login')

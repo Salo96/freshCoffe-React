@@ -1,15 +1,15 @@
 import { formatearDinero } from "../helpers"
 import { useQuiosco } from "../hooks/useQuiosco"
 
-export const Producto = ({ producto }) => {
+export const Producto = ({ producto, botonAgregar = false, botonDisponible = false }) => {
 
-    const { handleClickModel, handleSetProducto } = useQuiosco();
+    const { handleClickModel, handleSetProducto, handleClickProductoAgotado } = useQuiosco();
     const { nombre, precio, imagen } = producto
 
   return (
     <div className="border p-3 shadow bg-white">
       <img 
-        src={`img/${imagen}.jpg`}
+        src={ `/img/${imagen}.jpg`}//`img/${imagen}.jpg` ||
         alt={`imagen ${nombre}`}
         className="w-full"
       />
@@ -21,16 +21,28 @@ export const Producto = ({ producto }) => {
           {formatearDinero(precio)}
         </p>
 
-      <button
-        type="button"
-        className="bg-indigo-600 hover:bg-indigo-800 text-white w-full mt-5 p-3 uppercase font-bold"
-        onClick={() => {
-          handleClickModel();
-          handleSetProducto(producto);
-        }}
-      >
-        Agregar
-      </button>
+      { botonAgregar && (
+        <button
+          type="button"
+          className="bg-indigo-600 hover:bg-indigo-800 text-white w-full mt-5 p-3 uppercase font-bold"
+          onClick={() => {
+            handleClickModel();
+            handleSetProducto(producto);
+          }}
+        >
+          Agregar
+        </button>
+      )}
+
+      {botonDisponible && (
+          <button
+          type="button"
+          className="bg-indigo-600 hover:bg-indigo-800 text-white w-full mt-5 p-3 uppercase font-bold"
+          onClick={() => handleClickProductoAgotado(producto.id)}
+        >
+          Producto Agotado
+        </button>
+      )}
 
       </div>
 

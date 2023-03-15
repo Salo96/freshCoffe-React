@@ -23,7 +23,7 @@ Modal.setAppElement('#root');
 
 export const Layout = () => {
 
-  const { user, error } = useAuth({middleware: 'auth'})
+  useAuth({middleware: 'auth'})
   const { modal, handleClickModel } = useQuiosco();
 
   // console.log(user);
